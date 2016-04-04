@@ -1,0 +1,32 @@
+/quote|lambda|if|set!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote|else|=>|define|unquote|unquote-splicing/	{ fmt.Println("keyword = ", yylex.Text()) }
+/[a-zA-Z!\$%&\*\/:\<=\>\?\^_~][a-zA-Z0-9!\$%&\*\/:\<=\>\?\^_~\+\-\.@]*|\+|-|\.\.\./ { fmt.Println("identifier = ", yylex.Text()) }
+/#t|#f/		{ fmt.Println("bool = ", yylex.Text()) }
+/#\\./	{ fmt.Println("char = ", yylex.Text()) }
+/#\\space/	{ fmt.Println("space = ", yylex.Text()) }
+/#\\newline/	{ fmt.Println("newline = ", yylex.Text()) }
+/"([^"\\]|\\\"|\\\\)*"/	{ fmt.Println("string = ", yylex.Text()) }
+/[ \n\r\t]*/		{ fmt.Println("atmosphere = ", yylex.Text()) }
+/;[^\n\r]*/		{ fmt.Println("comment = ", yylex.Text()) }
+/[01]+/ { fmt.Println("bin number = ", yylex.Text()) }
+/[0-7]+/ { fmt.Println("octet number = ", yylex.Text()) }
+/[0-9]+/	{ fmt.Println("decmel number = ", yylex.Text()) }
+/[0-9a-fA-F]+/ { fmt.Println("hex number = ", yylex.Text()) }
+/[\+-]i/	{ fmt.Println("sign complex = ", yylex.Text()) }
+/#[iIEe]/	{ fmt.Println("exact = ", yylex.Text()) }
+/#[bBoOxXdD]/	{ fmt.Println("radix = ", yylex.Text()) }
+/\(|\)|#\(|'|`|,|,@|\./ { fmt.Println("delimiter = ", yylex.Text()) }
+//
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+type yySymType struct {
+}
+
+func main() {
+	v := &yySymType{}
+	NewLexer(os.Stdin).Lex(v)
+}
