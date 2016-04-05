@@ -1,0 +1,47 @@
+/quote|lambda|if|set!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote/ { lval.tok = ast.Token{SymbolType, yylex.Text()}; return SymbolType }
+/else|=>|define|unquote|unquote-splicing/	{ lval.tok = ast.Token{SymbolType, yylex.Text()}; return SymbolType }
+/[a-zA-Z!\$%&\*\/:\<=\>\?\^_~][a-zA-Z0-9!\$%&\*\/:\<=\>\?\^_~\+\-\.@]*|\+|-|\.\.\./ { lval.tok = ast.Token{SymbolType, yylex.Text()}; return SymbolType }
+/#t|#f/		{ lval.tok = ast.Token{BooleanType, yylex.Text()}; return BooleanType }
+/#\\(.|space|newline)/	{ lval.tok = ast.Token{CharType, yylex.Text()}; return CharType }
+/"([^"\\]|\\\"|\\\\)*"/	{ lval.tok = ast.Token{StringType, yylex.Text()}; return StringType }
+/[ \n\r\t]*/		{}
+/;[^\n\r]*/		{}
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)@([\+\-])?([01]+|[01]+\/[01]+)/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)\+([01]+|[01]+\/[01]+)i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)-([01]+|[01]+\/[01]+)i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)[\+\-]i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)[\+\-]([01]+|[01]+\/[01]+)?i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)@([\+\-])?([0-7]+|[0-7]+\/[0-7]+)/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)\+([0-7]+|[0-7]+\/[0-7]+)i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)-([0-7]+|[0-7]+\/[0-7]+)i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)[\+\-]i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)[\+\-]([0-7]+|[0-7]+\/[0-7]+)?i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)@([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)\+([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)-([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)[\+\-]i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)[\+\-]([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)?i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))@([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))\+([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))-([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))[\+\-]i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)[\+\-]([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))?i/	{ lval.tok = ast.Token{NumberType, yylex.Text()}; return NumberType }
+/'|`|,|,@/	{ lval.tok = ast.Token{ShortStatType, yylex.Text()}; return ShortStatType }
+/#\(/	{ lval.tok = ast.Token{VectorType, yylex.Text()}; return VectorType }
+/\./ { return int(yylex.Text()[0]) }
+/\(|\)/ { return int(yylex.Text()[0]) }
+//
+package parser
+
+import (
+	"github.com/yukirin/goheme/ast"
+)
+
+type LexerWrapper struct {
+	*Lexer
+	Ast ast.Expr
+}
