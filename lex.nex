@@ -1,4 +1,5 @@
-/quote|lambda|if|set!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote|else|=>|define|unquote|unquote-splicing/	{ fmt.Println("keyword = ", yylex.Text()) }
+/quote|lambda|if|set!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote/ { fmt.Println("expr keyword = ", yylex.Text()) }
+/else|=>|define|unquote|unquote-splicing/	{ fmt.Println("stat keyword = ", yylex.Text()) }
 /[a-zA-Z!\$%&\*\/:\<=\>\?\^_~][a-zA-Z0-9!\$%&\*\/:\<=\>\?\^_~\+\-\.@]*|\+|-|\.\.\./ { fmt.Println("identifier = ", yylex.Text()) }
 /#t|#f/		{ fmt.Println("bool = ", yylex.Text()) }
 /#\\(.|space|newline)/	{ fmt.Println("char = ", yylex.Text()) }
@@ -29,7 +30,10 @@
 /((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))-([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))i/	{ fmt.Println("decimal num = ", yylex.Text()) }
 /((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))[\+\-]i/	{ fmt.Println("decimal num = ", yylex.Text()) }
 /((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)[\+\-]([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))?i/	{ fmt.Println("decimal num = ", yylex.Text()) }
-/\(|\)|#\(|'|`|,|,@|\./ { fmt.Println("delimiter = ", yylex.Text()) }
+/'|`|,|,@/	{ fmt.Println("short stat = ", yylex.Text()) }
+/#\(/	{ fmt.Println("vector = ", yylex.Text()) }
+/\./ { fmt.Println("connma = ", yylex.Text()) }
+/\(|\)/ { fmt.Println("delimiter = ", yylex.Text()) }
 //
 package main
 
