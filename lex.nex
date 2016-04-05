@@ -1,19 +1,34 @@
 /quote|lambda|if|set!|begin|cond|and|or|case|let|let\*|letrec|do|delay|quasiquote|else|=>|define|unquote|unquote-splicing/	{ fmt.Println("keyword = ", yylex.Text()) }
 /[a-zA-Z!\$%&\*\/:\<=\>\?\^_~][a-zA-Z0-9!\$%&\*\/:\<=\>\?\^_~\+\-\.@]*|\+|-|\.\.\./ { fmt.Println("identifier = ", yylex.Text()) }
 /#t|#f/		{ fmt.Println("bool = ", yylex.Text()) }
-/#\\./	{ fmt.Println("char = ", yylex.Text()) }
-/#\\space/	{ fmt.Println("space = ", yylex.Text()) }
-/#\\newline/	{ fmt.Println("newline = ", yylex.Text()) }
+/#\\(.|space|newline)/	{ fmt.Println("char = ", yylex.Text()) }
 /"([^"\\]|\\\"|\\\\)*"/	{ fmt.Println("string = ", yylex.Text()) }
-/[ \n\r\t]*/		{ fmt.Println("atmosphere = ", yylex.Text()) }
+/[ \n\r\t]*/		{}
 /;[^\n\r]*/		{ fmt.Println("comment = ", yylex.Text()) }
-/[01]+/ { fmt.Println("bin number = ", yylex.Text()) }
-/[0-7]+/ { fmt.Println("octet number = ", yylex.Text()) }
-/[0-9]+/	{ fmt.Println("decmel number = ", yylex.Text()) }
-/[0-9a-fA-F]+/ { fmt.Println("hex number = ", yylex.Text()) }
-/[\+-]i/	{ fmt.Println("sign complex = ", yylex.Text()) }
-/#[iIEe]/	{ fmt.Println("exact = ", yylex.Text()) }
-/#[bBoOxXdD]/	{ fmt.Println("radix = ", yylex.Text()) }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)/	{ fmt.Println("bin num = ", yylex.Text()) }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)@([\+\-])?([01]+|[01]+\/[01]+)/	{ fmt.Println("bin num = ", yylex.Text()) }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)\+([01]+|[01]+\/[01]+)i/	{ fmt.Println("bin num = ", yylex.Text()) }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)-([01]+|[01]+\/[01]+)i/	{ fmt.Println("bin num = ", yylex.Text()) }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)([\+\-])?([01]+|[01]+\/[01]+)[\+\-]i/	{ fmt.Println("bin num = ", yylex.Text()) }
+/((#[eEiI])?(#[bB])|(#[bB])(#[eEiI])?)[\+\-]([01]+|[01]+\/[01]+)?i/	{ fmt.Println("bin num = ", yylex.Text()) }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)/	{ fmt.Println("octet num = ", yylex.Text()) }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)@([\+\-])?([0-7]+|[0-7]+\/[0-7]+)/	{ fmt.Println("octet num = ", yylex.Text()) }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)\+([0-7]+|[0-7]+\/[0-7]+)i/	{ fmt.Println("octet num = ", yylex.Text()) }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)-([0-7]+|[0-7]+\/[0-7]+)i/	{ fmt.Println("octet num = ", yylex.Text()) }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)([\+\-])?([0-7]+|[0-7]+\/[0-7]+)[\+\-]i/	{ fmt.Println("octet num = ", yylex.Text()) }
+/((#[eEiI])?(#[oO])|(#[oO])(#[eEiI])?)[\+\-]([0-7]+|[0-7]+\/[0-7]+)?i/	{ fmt.Println("octet num = ", yylex.Text()) }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)/	{ fmt.Println("hex num = ", yylex.Text()) }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)@([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)/	{ fmt.Println("hex num = ", yylex.Text()) }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)\+([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)i/	{ fmt.Println("hex num = ", yylex.Text()) }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)-([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)i/	{ fmt.Println("hex num = ", yylex.Text()) }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)([\+\-])?([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)[\+\-]i/	{ fmt.Println("hex num = ", yylex.Text()) }
+/((#[eEiI])?(#[xX])|(#[xX])(#[eEiI])?)[\+\-]([0-9a-fA-F]+|[0-9a-fA-F]+\/[0-9a-fA-F]+)?i/	{ fmt.Println("hex num = ", yylex.Text()) }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))/	{ fmt.Println("decimal num = ", yylex.Text()) }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))@([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))/	{ fmt.Println("decimal num = ", yylex.Text()) }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))\+([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))i/	{ fmt.Println("decimal num = ", yylex.Text()) }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))-([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))i/	{ fmt.Println("decimal num = ", yylex.Text()) }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)([\+\-])?([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))[\+\-]i/	{ fmt.Println("decimal num = ", yylex.Text()) }
+/((#[eEiI])?(#[dD])?|(#[dD])?(#[eEiI])?)[\+\-]([0-9]+|[0-9]+\/[0-9]+|(\.?[0-9]+([eEsSfFdDlL][\+\-]?[0-9]+)?|[0-9]+\.[0-9]*([eEsSfFdDlL][\+\-]?[0-9]+)?))?i/	{ fmt.Println("decimal num = ", yylex.Text()) }
 /\(|\)|#\(|'|`|,|,@|\./ { fmt.Println("delimiter = ", yylex.Text()) }
 //
 package main
